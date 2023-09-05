@@ -55,36 +55,46 @@
 
         <div class="card w-100 mt-5">
             <div class="card-body">
-                <h5 class="card-title mb-2">Serviços cadastrados</h5>
-
-                <table class="table w-100">
-                    <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>Descrição</th>
-                        <th>Categoria</th>
-                        <th>Alterar</th>
-                        <th>Apagar</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="servico : ${servicos}">
-                        <td th:text="${servico.nome}"></td>
-                        <td th:text="${servico.descricao}"></td>
-                        <td th:text="${servico.categoria}"></td>
-                        <td>
-                            <a th:href="@{/admin/servicos/editar/{id}(id=${servico.id})}" class="btn btn-success" style="width: 7rem">
-                                Editar <i class="bi bi-pencil-fill ms-2"></i>
-                            </a>
-                        </td>
-                        <td>
-                            <button class="btn btn-danger" style="width: 7rem" data-bs-toggle="modal" th:data-bs-target="'#deleteModal' + ${servico.id}">
-                                Excluir <i class="bi bi-trash-fill ms-2"></i>
-                            </button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                <div class="d-flex justify-content">
+                    <h5 class="card-title mb-2">Serviços cadastrados</h5>
+                    <form action="buscar-servico" method="get" class="d-flex ms-auto"  >
+                        <input class="form-control me-2" type="search" name ="pesquisa-serv"  placeholder="Pesquisar Servico" aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Pesquisar</button>
+                    </form>
+                </div>
+                <div class="card-body" th:if="${#lists.isEmpty(servicos)}">
+                    <h5>Nenhum resultado encontrado.</h5>
+                </div>
+                <div th:unless="${#lists.isEmpty(servicos)}">
+                    <table class="table w-100">
+                        <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Descrição</th>
+                            <th>Categoria</th>
+                            <th>Alterar</th>
+                            <th>Apagar</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="servico : ${servicos}">
+                            <td th:text="${servico.nome}"></td>
+                            <td th:text="${servico.descricao}"></td>
+                            <td th:text="${servico.categoria}"></td>
+                            <td>
+                                <a th:href="@{/admin/servicos/editar/{id}(id=${servico.id})}" class="btn btn-success" style="width: 7rem">
+                                    Editar <i class="bi bi-pencil-fill ms-2"></i>
+                                </a>
+                            </td>
+                            <td>
+                                <button class="btn btn-danger" style="width: 7rem" data-bs-toggle="modal" th:data-bs-target="'#deleteModal' + ${servico.id}">
+                                    Excluir <i class="bi bi-trash-fill ms-2"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </main>
