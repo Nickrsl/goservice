@@ -60,4 +60,8 @@ public class ServicoService {
             return servicoRepository.totalByPagina(numPagina);
         }
     }
+
+    public List<Servico> findByNome(String nome){
+        return servicoRepository.findByNome(nome);
+    }
 }
