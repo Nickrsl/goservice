@@ -24,7 +24,7 @@
         <script th:inline="javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
         <script th:inline="javascript">
-            let usuarios = [[${usuarios}]];
+            let usuarios = [[${totalUsers}]];
             console.log(usuarios);
 
             for (usuario of usuarios){
@@ -51,6 +51,69 @@
                   label: 'Perfis',
                   data: [qntadmin, qntcliente, qntprestador],
                   backgroundColor: ['rgba(106,90,205,0.5)','rgba(65,105,225,0.5)','rgba(70,130,180,0.5)'],
+                  borderWidth: 1
+                }]
+              },
+              options: {
+                scales: {
+                  y: {
+                    beginAtZero: true
+                  }
+                }
+              }
+            });
+        </script>
+
+
+
+        <div class="card w-100 mt-5">
+            <canvas id="myChart2"></canvas>
+        </div>
+
+        <script>
+            let qntAguardandoConfirmacao = 0;
+            let qntCanceladoPeloCliente = 0;
+            let qntCanceladoPeloPrestador = 0;
+            let qntConfirmado = 0;
+            let qntConcluido = 0;
+        </script>
+
+        <script th:inline="javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <script th:inline="javascript">
+            let agendamentos = [[${totalAgendamentos}]];
+            console.log(agendamentos);
+
+            for (agendamento of agendamentos){
+                if (agendamento.statusAgendamento === "AGUARDANDO_CONFIRMACAO") {
+                    qntAguardandoConfirmacao++;
+                }
+                else if (agendamento.statusAgendamento === "CANCELADO_PELO_CLIENTE") {
+                    qntCanceladoPeloCliente++;
+                }
+                else if (agendamento.statusAgendamento === "CANCELADO_PELO_PRESTADOR") {
+                    qntCanceladoPeloPrestador++;
+                }
+                else if (agendamento.statusAgendamento === "CONFIRMADO") {
+                    qntConfirmado++;
+                }
+                else {
+                    qntConcluido++;
+                }
+            }
+        </script>
+
+        <script th:inline="javascript">
+            const ctx2 = document.getElementById('myChart2');
+
+            new Chart(ctx2, {
+              type: 'bar',
+              data: {
+                labels: ['Aguardando Confirmação', 'Cancelado pelo Cliente', 'Cancelado pelo Prestador', 'Confirmado', 'Concluido'],
+                datasets: [{
+                  label: 'Agendamentos',
+                  data: [qntAguardandoConfirmacao, qntCanceladoPeloCliente, qntCanceladoPeloPrestador, qntConfirmado, qntConcluido],
+                  backgroundColor: ['rgba(255,255,0,0.5)','rgba(139,0,0,0.5)','rgba(178,34,34,0.5)','rgba(0,128,0,0.5)','rgba(70,130,180,0.5)'],
                   borderWidth: 1
                 }]
               },
