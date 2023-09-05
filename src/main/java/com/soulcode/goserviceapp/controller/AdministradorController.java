@@ -158,11 +158,20 @@ public class AdministradorController {
         }
         return mv;
     }
+
     @GetMapping(value="/buscar-servico")
     public ModelAndView buscarServico(@RequestParam("pesquisa-serv") String nome){
         ModelAndView mv = new ModelAndView("servicosAdmin");
         List<Servico> servicos = servicoService.findByNome(nome);
         mv.addObject("servicos", servicos);
+        return mv;
+    }
+
+    @GetMapping( value="/buscar-usuario")
+    public ModelAndView buscarUsuario(@RequestParam("pesquisa-user") String nome){
+        ModelAndView mv = new ModelAndView("usuariosAdmin");
+        List<Usuario> usuarios = usuarioService.findByNome(nome);
+        mv.addObject("usuarios", usuarios);
         return mv;
     }
 }
