@@ -10,6 +10,25 @@
             <li><a class="dropdown-item" href="#" onclick="changeTheme('dark')"> Dark Theme</a></li>
             <li><a class="dropdown-item" href="#" onclick="changeTheme('light')"> Light Theme</a></li>
         </ul>
+        <style>
+            body.dark-theme {
+                background-color: #808080;
+                color: #FFF;
+            }
+
+            body.light-theme {
+                background-color: #fff;
+                color: #333;
+            }
+        </style>
+
+        <script>
+            function changeTheme(theme) {
+                const body = document.body;
+                body.classList.remove('dark-theme', 'light-theme');
+                body.classList.add(theme + '-theme');
+            }
+        </script>
     </div>
 
 
@@ -67,7 +86,8 @@
 
             <div class="dropdown text-end" th:if="${#authorization.expression('isAuthenticated()')}">
                 <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+                    <img th:if="${usuarioLogado.fotoPerfil}" th:src="${usuarioLogado.fotoPerfil}" width="35" height="35" class="rounded-circle">
+                    <img th:unless="${usuarioLogado.fotoPerfil}" src="https://github.com/mdo.png" width="35" height="35" class="rounded-circle">
                 </a>
                 <ul class="dropdown-menu text-small">
                     <li><a class="dropdown-item" href="/auth/password/new">Editar Senha</a></li>
@@ -82,25 +102,6 @@
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/js/bootstrap.min.js"></script>
                 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-                <style>
-                    body.dark-theme {
-                        background-color: #808080;
-                        color: #FFF;
-                    }
-
-                    body.light-theme {
-                        background-color: #fff;
-                        color: #333;
-                    }
-                </style>
-
-                <script>
-                    function changeTheme(theme) {
-                        const body = document.body;
-                        body.classList.remove('dark-theme', 'light-theme');
-                        body.classList.add(theme + '-theme');
-                    }
-                </script>
             </div>
         </div>
     </div>
