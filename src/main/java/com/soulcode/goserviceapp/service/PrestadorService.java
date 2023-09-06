@@ -56,6 +56,7 @@ public class PrestadorService {
         updatedPrestador.setTaxaPorHora(prestador.getTaxaPorHora());
         Endereco endereco = enderecoService.salvarOuAtualizarPrestador(prestador);
         updatedPrestador.setEndereco(endereco);
+        updatedPrestador.setFotoPerfil(prestador.getFotoPerfil());
         return prestadorRepository.save(updatedPrestador);
     }
 

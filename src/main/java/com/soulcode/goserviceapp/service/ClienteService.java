@@ -48,6 +48,7 @@ public class ClienteService {
         updatedCliente.setTelefone(cliente.getTelefone());
         updatedCliente.setCpf(cliente.getCpf());
         updatedCliente.setDataNascimento(cliente.getDataNascimento());
+        updatedCliente.setFotoPerfil(cliente.getFotoPerfil());
 
         Endereco endereco = this.enderecoService.salvarOuAtualizarCliente(cliente);
         updatedCliente.setEndereco(endereco);
