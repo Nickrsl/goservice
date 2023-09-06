@@ -4,6 +4,7 @@ import com.soulcode.goserviceapp.domain.*;
 import com.soulcode.goserviceapp.repository.UsuarioRepository;
 import com.soulcode.goserviceapp.service.exceptions.UsuarioNaoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -95,6 +96,7 @@ public class UsuarioService {
     public List<Usuario> totalByUsuarioPerfil(String perfil) {
         return usuarioRepository.totalByUsuarioPerfil(perfil);
     }
+
     public List<Usuario> totalByPagina(Integer numPagina){
         if (numPagina<=0){
             numPagina=(1-1)*10;
@@ -104,7 +106,10 @@ public class UsuarioService {
             return usuarioRepository.totalByPagina(numPagina);
         }
     }
+
+    @Cacheable(cacheNames = "redisCache")
     public List<Usuario> findByNome(String nome){
+        System.err.println("BUSCANDO USUÁRIO NO BANCO...");
         return usuarioRepository.findByNome(nome);
     }
 }
