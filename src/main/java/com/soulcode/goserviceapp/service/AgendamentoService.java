@@ -5,6 +5,7 @@ import com.soulcode.goserviceapp.domain.enums.StatusAgendamento;
 import com.soulcode.goserviceapp.repository.AgendamentoRepository;
 import com.soulcode.goserviceapp.service.exceptions.AgendamentoNaoEncontradoException;
 import com.soulcode.goserviceapp.service.exceptions.StatusAgendamentoImutavelException;
+import com.soulcode.goserviceapp.service.exceptions.HorarioException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.Authentication;
@@ -37,19 +38,39 @@ public class AgendamentoService {
         throw new AgendamentoNaoEncontradoException();
     }
 
+    public boolean horaPossivel(LocalTime hora, LocalDate data, Prestador prestador) {
+        Long idPrestador = prestador.getId();
+        List<Agendamento> totalAgendamentos = agendamentoRepository.findByDataPrestador(data, idPrestador);
+
+        for(Agendamento agendamento : totalAgendamentos) {
+
+            if(agendamento.getHora().equals(hora)) {
+                return false;
+            }
+
+        }
+        return true;
+    }
+
     public Agendamento create(Authentication authentication, Long servicoId, Long prestadorId, LocalDate data, LocalTime hora){
         Cliente cliente = clienteService.findAuthenticated(authentication);
         Prestador prestador = prestadorService.findById(prestadorId);
         Servico servico = servicoService.findById(servicoId);
-        Agendamento agendamento = new Agendamento();
-        agendamento.setCliente(cliente);
-        agendamento.setPrestador(prestador);
-        agendamento.setServico(servico);
-        agendamento.setData(data);
-        agendamento.setHora(hora);
 
-        return agendamentoRepository.save(agendamento);
+        if (horaPossivel(hora, data, prestador)) {
+            Agendamento agendamento = new Agendamento();
+            agendamento.setCliente(cliente);
+            agendamento.setPrestador(prestador);
+            agendamento.setServico(servico);
+            agendamento.setData(data);
+            agendamento.setHora(hora);
+            return agendamentoRepository.save(agendamento);
+
+        } else {
+            throw new HorarioException();
+        }
     }
+
     @Cacheable(cacheNames = "redisCache")
     public List<Agendamento> findByCliente(Authentication authentication){
         System.err.println("BUSCANDO AGENDAMENTOS CLIENTE NO BANCO...");
