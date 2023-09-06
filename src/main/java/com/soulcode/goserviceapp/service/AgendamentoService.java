@@ -108,7 +108,7 @@ public class AgendamentoService {
         throw new StatusAgendamentoImutavelException();
     }
 
-    public List<Agendamento> totalAgendamentosByStatus(String statusAgendamento) {
-        return agendamentoRepository.totalAgendamentosByStatus(statusAgendamento);
+    public List<String> totalAgendamentosByStatus() {
+        return agendamentoRepository.totalAgendamentosByStatus();
     }
 }
