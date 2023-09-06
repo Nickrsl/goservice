@@ -31,7 +31,9 @@
                     </thead>
                     <tbody>
                     <tr th:each="agendamento : ${agendamentos}">
-                        <td th:text="${agendamento.prestador.nome}"></td>
+                        <td class=" fw-medium text-primary" th:data-bs-target="'#prestadorModel' + ${agendamento?.id}" data-bs-toggle="modal">
+                            <span th:text="${agendamento.prestador.nome}" class="btn btn-primary"> </span>
+                        </td>
                         <td th:text="${agendamento.servico.nome}"></td>
                         <td th:text="${agendamento.data}"></td>
                         <td th:text="${agendamento.hora}"></td>
@@ -92,6 +94,36 @@
             </div>
         </div>
     </div>
+
+    <div th:each="agendamento : ${agendamentos}" >
+        <div class="modal fade" th:id="'prestadorModel' + ${agendamento?.id}" tabindex="-1" role="dialog" aria-labelledby="PrestadorModal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Informações do Prestador</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <h5>Nome</h5>
+                        <p th:text="${agendamento.prestador.nome}">></p>
+
+                        <h5>Email:</h5>
+                        <p th:text="${agendamento.prestador.email}"></p>
+
+                        <h5>Descrição Profissional:</h5>
+                        <p th:text="${agendamento.prestador?.descricao}"></p>
+
+                        <h5>Taxa de Atendimento por Hora:</h5>
+                        <p th:text="${agendamento.prestador?.taxaPorHora}"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div th:replace="fragments/footer :: footer"></div>
 </div>
 
