@@ -11,6 +11,7 @@
     <div class="container my-4">
         <h2>Dados Cadastrais</h2>
 
+        <div class="w-100 mt-4">
         <div class="card w-100 mt-5">
             <div class="card-body">
                 <h5 class="card-title mb-2">Alterar Dados</h5>
@@ -20,6 +21,22 @@
 
                 <form method="post" th:action="@{/cliente/dados}" class="needs-validation" novalidate>
                     <input type="hidden" name="id" th:field="*{cliente.id}">
+
+                    <!--espaço-->
+
+                    <input type="hidden" name="urlImagem" id="urlImagem" th:field="*{cliente.fotoPerfil}">
+                    <div class="imageUpload d-flex flex-column mt-4">
+                        <input type="file" class="inp form-control" onchange="getImageData(event)" />
+                        <span class="filedata"></span>
+                        <div class="progresso">
+                            <div class="spinner-border" role="status">
+                            </div>
+                        </div>
+                        <button type="button" onclick="uploadImage()" class="upload btn btn-success my-3">Upload</button>
+                    </div>
+
+                    <!--espaço-->
+
                     <div class="mb-3">
                         <label for="nome" class="form-label">Nome<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="nome" name="nome" th:field="*{cliente.nome}" required>
@@ -70,7 +87,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="numero" class="form-label">Número</label>
+                        <label for="numero" class="form-label">Numero</label>
                         <input type="text" class="form-control" id="numero" name="numero" th:field="*{cliente.endereco.numero}">
                         <div class="form-text"></div>
                     </div>
@@ -81,6 +98,6 @@
     </div>
     <div th:replace="fragments/footer :: footer"></div>
 </div>
-
+</div>
 </body>
 </html>

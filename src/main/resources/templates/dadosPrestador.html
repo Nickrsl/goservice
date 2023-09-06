@@ -12,6 +12,7 @@
 
         <h2>Dados Cadastrais</h2>
 
+        <div class="w-100 mt-4">
         <div class="card w-100 mt-5">
             <div class="card-body">
                 <h5 class="card-title mb-2">Alterar Dados</h5>
@@ -21,6 +22,21 @@
 
                 <form th:if="${prestador != null}" method="post" th:action="@{/prestador/dados}" class="needs-validation" novalidate>
                     <input type="hidden" name="id" th:field="*{prestador.id}">
+                    <!--espaço-->
+
+                    <input type="hidden" name="urlImagem" id="urlImagem" th:field="*{prestador.fotoPerfil}">
+                    <div class="imageUpload d-flex flex-column mt-4">
+                        <input type="file" id="fotoupload" class="inp form-control" onchange="getImageData(event)" accept="image/jpeg, image/jpg, image/png" />
+                        <span class="filedata"></span>
+                        <div class="progresso">
+                            <div class="spinner-border" role="status">
+                            </div>
+                        </div>
+                        <button type="button" id="upload" onclick="uploadImage()" class="upload btn btn-primary my-3">Upload</button>
+                    </div>
+
+                    <!--espaço-->
+
                     <div class="mb-3">
                         <label for="nome" class="form-label">Nome<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="nome" name="nome" th:field="*{prestador.nome}" required>
@@ -73,7 +89,7 @@
 
                 <h5 class="card-title mb-2 mt-5">Especialidades</h5>
 
-                <form class="d-flex gap-3 my-3" method="post" th:action="@{/prestador/dados/especialidade/adicionar}" class="needs-validation" novalidate>
+                <form class="d-flex gap-3 my-3 needs-validation" method="post" th:action="@{/prestador/dados/especialidade/adicionar}" novalidate>
                     <select class="form-select" id="servicoId" name="servicoId" required>
                         <option value="" disabled selected>Selecione uma especialidade</option>
                         <option th:each="servico : ${servicos}" th:value="${servico.id}" th:text="${servico.nome}"></option>
@@ -125,7 +141,7 @@
             </div>
         </div>
     </div>
-
+    </div>
 
 
     <div th:replace="fragments/footer :: footer"></div>

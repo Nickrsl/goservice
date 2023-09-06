@@ -1,6 +1,7 @@
 package com.soulcode.goserviceapp.domain;
 
 import com.soulcode.goserviceapp.domain.enums.Perfil;
+import com.soulcode.goserviceapp.repository.ClienteRepository;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
@@ -19,12 +20,15 @@ public class Cliente extends Usuario{
     public Cliente() {
         super();
         setPerfil(Perfil.CLIENTE);
+
     }
+
     public Cliente(Long id, String nome, String email, String senha, Perfil perfil, Boolean habilitado, String telefone, String cpf, LocalDate dataNascimento, Endereco endereco) {
         super(id, nome, email, senha, perfil, habilitado, endereco);
         this.telefone = telefone;
         this.cpf = cpf;
         this.dataNascimento = dataNascimento;
+
     }
     public Cliente(Long id, String nome, String email, String senha, Perfil perfil, Boolean habilitado, Endereco endereco) {
         super(id, nome, email, senha, perfil, habilitado, endereco);

@@ -4,6 +4,7 @@ import com.soulcode.goserviceapp.domain.Agendamento;
 import com.soulcode.goserviceapp.domain.Servico;
 import com.soulcode.goserviceapp.domain.Usuario;
 import com.soulcode.goserviceapp.domain.UsuarioLog;
+import com.soulcode.goserviceapp.repository.UsuarioRepository;
 import com.soulcode.goserviceapp.service.AgendamentoService;
 import com.soulcode.goserviceapp.service.ServicoService;
 import com.soulcode.goserviceapp.service.UsuarioLogService;
@@ -34,6 +35,9 @@ public class AdministradorController {
 
     @Autowired
     private AgendamentoService agendamentoService;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     @GetMapping(value = "/servicos")
     public ModelAndView servicos() {
@@ -149,15 +153,24 @@ public class AdministradorController {
         try {
             List<UsuarioLog> logsAuth = usuarioLogService.findAll();
             mv.addObject("logsAuth", logsAuth);
-            List<Usuario> totalUsers = usuarioService.totalByUsuarioPerfil(perfil);
-            mv.addObject("totalUsers", totalUsers);
-            List<Agendamento> totalAgendamentos = agendamentoService.totalAgendamentosByStatus(statusAgendamento);
+            List<String> totalProfiles = usuarioService.totalByUsuarioPerfil();
+            mv.addObject("totalProfiles", totalProfiles);
+            List<String> totalAgendamentos = agendamentoService.totalAgendamentosByStatus();
             mv.addObject("totalAgendamentos", totalAgendamentos);
         } catch (Exception ex) {
             mv.addObject("errorMessage", "Erro ao buscar dados de log de autenticação.");
         }
         return mv;
     }
+
+    @GetMapping(value="/buscar-servico")
+    public ModelAndView buscarServico(@RequestParam("pesquisa-serv") String nome){
+        ModelAndView mv = new ModelAndView("servicosAdmin");
+        List<Servico> servicos = servicoService.findByNome(nome);
+        mv.addObject("servicos", servicos);
+        return mv;
+    }
+
     @GetMapping( value="/buscar-usuario")
     public ModelAndView buscarUsuario(@RequestParam("pesquisa-user") String nome){
         ModelAndView mv = new ModelAndView("usuariosAdmin");
@@ -165,5 +178,4 @@ public class AdministradorController {
         mv.addObject("usuarios", usuarios);
         return mv;
     }
-
 }
