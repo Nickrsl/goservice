@@ -93,8 +93,8 @@ public class UsuarioService {
         throw new UsuarioNaoEncontradoException();
     }
 
-    public List<Usuario> totalByUsuarioPerfil(String perfil) {
-        return usuarioRepository.totalByUsuarioPerfil(perfil);
+    public List<String> totalByUsuarioPerfil() {
+        return usuarioRepository.totalByUsuarioPerfil();
     }
 
     public List<Usuario> totalByPagina(Integer numPagina){
