@@ -5,11 +5,14 @@ import com.soulcode.goserviceapp.repository.ClienteRepository;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
+@Getter @Setter
 public class Cliente extends Usuario{
     private String telefone;
     @Column(length = 14)
@@ -32,30 +35,6 @@ public class Cliente extends Usuario{
     }
     public Cliente(Long id, String nome, String email, String senha, Perfil perfil, Boolean habilitado, Endereco endereco) {
         super(id, nome, email, senha, perfil, habilitado, endereco);
-    }
-
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public LocalDate getDataNascimento() {
-        return dataNascimento;
-    }
-
-    public void setDataNascimento(LocalDate dataNascimento) {
-        this.dataNascimento = dataNascimento;
     }
 
 

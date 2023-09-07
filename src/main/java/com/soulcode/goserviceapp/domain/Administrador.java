@@ -2,10 +2,11 @@ package com.soulcode.goserviceapp.domain;
 
 import com.soulcode.goserviceapp.domain.enums.Perfil;
 import jakarta.persistence.Entity;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 public class Administrador extends Usuario {
-
     public Administrador() {
         super();
         setPerfil(Perfil.ADMIN);
